@@ -1,27 +1,30 @@
 from bluepy.btle import Peripheral, UUID
 from bluepy.btle import Scanner, DefaultDelegate
 import matplotlib.pyplot as plt
+from unpack import print3axis, MAG_DATA
 
-# plt.figure(0)
+# MAG_DATA = [0, 0, 0]
+
 value0 = [0]*30
-# plt.ylim([0, 256])
-# plt.plot(value0)
-# plt.draw()
-# plt.pause(0.01)
+plt.figure(0)
+plt.ylim([-1000, 1000])
+plt.plot(value0)
+plt.draw()
+plt.pause(0.01)
 
-# plt.figure(1)
 value1 = [0]*30
-# plt.ylim([0, 256])
-# plt.plot(value1)
-# plt.draw()
-# plt.pause(0.01)
+plt.figure(1)
+plt.ylim([-1000, 1000])
+plt.plot(value1)
+plt.draw()
+plt.pause(0.01)
 
-# plt.figure(2)
 value2 = [0]*30
-# plt.ylim([0, 256])
-# plt.plot(value2)
-# plt.draw()
-# plt.pause(0.01)
+plt.figure(2)
+plt.ylim([-1000, 1000])
+plt.plot(value2)
+plt.draw()
+plt.pause(0.01)
 
 
 class ScanDelegate(DefaultDelegate):
@@ -40,37 +43,37 @@ class MyDelegate(DefaultDelegate):
         DefaultDelegate.__init__(self)
 
     def handleNotification(self, chandle, data):
-        print(data)
-        data0 = data
-        data1 = data
-        data2 = data
+
+        print3axis(data)
+        for i in range(0, 3):
+            print(f"MAG_DATA[{i}] = {MAG_DATA[i]}")
 
         value0.pop(0)
-        value0.append(data0)
-        # plt.figure(0)
-        # plt.clf()
-        # plt.ylim([0, 256])
-        # plt.plot(value0)
-        # plt.draw()
-        # plt.pause(0.01)
+        value0.append(MAG_DATA[0])
+        plt.figure(0)
+        plt.clf()
+        plt.ylim([-1000, 1000])
+        plt.plot(value0)
+        plt.draw()
+        plt.pause(0.01)
 
         value1.pop(0)
-        value1.append(data1)
-        # plt.figure(1)
-        # plt.clf()
-        # plt.ylim([0, 256])
-        # plt.plot(value1)
-        # plt.draw()
-        # plt.pause(0.01)
+        value1.append(MAG_DATA[1])
+        plt.figure(1)
+        plt.clf()
+        plt.ylim([-1000, 1000])
+        plt.plot(value1)
+        plt.draw()
+        plt.pause(0.01)
 
         value2.pop(0)
-        value2.append(data2)
-        # plt.figure(2)
-        # plt.clf()
-        # plt.ylim([0, 256])
-        # plt.plot(value2)
-        # plt.draw()
-        # plt.pause(0.01)
+        value2.append(MAG_DATA[2])
+        plt.figure(2)
+        plt.clf()
+        plt.ylim([-1000, 1000])
+        plt.plot(value2)
+        plt.draw()
+        plt.pause(0.01)
 
 
 complete_local_name = "Eric Device"       # Complete Local Name of device
