@@ -11,9 +11,8 @@ mbed add http://os.mbed.com/teams/ST/code/BSP_B-L475E-IOT01/
 And replace the /source directory with the one in this repository.
 ```bash
 ./Mbed_CLI
-    ./source
-        ├── MagService.h
-        └── main.cpp
+    ├── MagService.h
+    └── main.cpp
 ```
 Then run the following command to compile and flash the GATT server
 ```bash
