@@ -1,4 +1,4 @@
-# Embedded System HW2 (Group 8)
+# Embedded System HW6 (Group 8)
 
 This code setups DMA to transfer audio data from `DFSDM` to `Buf_Mic0`. When the top and bottom half of `Buf_Mic0` are filled, the corresponding interrupts will generate.
 
