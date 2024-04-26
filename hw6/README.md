@@ -1,0 +1,2 @@
+The 3 problems are under the HW6-1, HW6-2, HW6-3_Mbed folders respectively.
+There are an addition folder HW6-3_Cube that can run on CubeIDE or built by CMAKE and uploaded to STM32 by CubeProgrammer. For more details, see the README.md under HW6-3_Cube.
