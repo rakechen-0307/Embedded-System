@@ -50,10 +50,6 @@ protected:
                                          // valueBytes[1] = magData[1];
                                          // valueBytes[2] = magData[2];
     {
-      // valueBytes[0] = magData[0];
-      // valueBytes[1] = magData[1];
-      // valueBytes[2] = magData[2];
-
       for (int i = 0; i < 3; ++i)
       {
         valueBytes[2 * i] = static_cast<int8_t>((magData[i] >> 8) & 0xFF); // Higher 8 bits

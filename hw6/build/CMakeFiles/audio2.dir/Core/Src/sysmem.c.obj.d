@@ -1,0 +1,20 @@
+CMakeFiles/audio2.dir/Core/Src/sysmem.c.obj: \
+ /home/wanchuan/embeddedSystem/hw6/audio2/Core/Src/sysmem.c \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/errno.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/errno.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/reent.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/_ansi.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/newlib.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/_newlib_version.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/config.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/ieeefp.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/features.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/lib/gcc/arm-none-eabi/10.3.1/include/stddef.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_types.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_types.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/lock.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/stdint.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_intsup.h \
+ /home/wanchuan/Downloads/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h
