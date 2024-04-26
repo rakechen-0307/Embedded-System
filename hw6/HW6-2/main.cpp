@@ -16,6 +16,8 @@ uint16_t sample_buffer[SAMPLE_BUFFER_SIZE];
 
 void printArray(uint16_t * arr, int start, int end);
 
+time_t start_sec;
+
 void Error_Handler()
 {
     __disable_irq();
@@ -24,9 +26,6 @@ void Error_Handler()
 
     }
 }
-
-
-
 
 void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 {
@@ -64,7 +63,7 @@ void ADC1_Init(void)
   /** Common config
   */
     hadc1.Instance = ADC1;
-    hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;//ADC_CLOCK_ASYNC_DIV1;
+    hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;//ADC_CLOCK_ASYNC_DIV1;
     hadc1.Init.Resolution = ADC_RESOLUTION_12B;
     hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
     hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
@@ -122,9 +121,12 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc)
 }
 void printArray(uint16_t * arr, int start, int end)
 {
-    for (int i = start; i < end / 2; i++) {
-        printf("%d\n", arr[i]);
+    time_t time_stamp = time(NULL)-start_sec;
+    printf("time from program start: %d(sec)\n", time_stamp);
+    for (int i = start; i < end; i++) {
+        printf("%d, ", arr[i]);
     }
+    printf("\n");
 }
 void DMA1_Channel1_IRQHandler(void)
 {
@@ -188,7 +190,7 @@ static void TIM1_Init(void)
     TIM_MasterConfigTypeDef sMasterConfig = {0};
 
     htim1.Instance = TIM1;
-    htim1.Init.Prescaler = 0.5 * 4000 - 1;
+    htim1.Init.Prescaler = 2000 - 1;
     htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
     htim1.Init.Period = 1000 - 1;
     htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -215,6 +217,7 @@ int main()
 {
     //HAL_Init();
     //SystemClock_Config();
+    start_sec = time(NULL);
 
     TIM1_Init();
     ADC1_DMA1CH1_init();

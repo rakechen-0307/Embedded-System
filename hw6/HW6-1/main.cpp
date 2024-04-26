@@ -1,5 +1,6 @@
 #include "mbed.h"
 #include "stm32l4xx_hal.h"
+#include <ctime>
 
 TIM_HandleTypeDef htim1;
 ADC_HandleTypeDef hadc1;
@@ -8,7 +9,7 @@ volatile int counter = 0;
 
 static events::EventQueue event_queue(32 * EVENTS_EVENT_SIZE);
 
-
+time_t start_sec;
 void Error_Handler()
 {
     __disable_irq();
@@ -20,8 +21,9 @@ void Error_Handler()
 
 void timer_count_callback()
 {
+    time_t time_stamp = time(NULL)-start_sec;
     uint16_t val = HAL_ADC_GetValue(&hadc1);
-    printf("%d : %d\n", counter++, val);
+    printf("time from program start: %d(sec), count: %d, value: %d\n", time_stamp, counter++, val);
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
@@ -71,7 +73,7 @@ void ADC1_Init(void)
   /** Common config
   */
     hadc1.Instance = ADC1;
-    hadc1.Init.ClockPrescaler = 5 * ADC_CLOCK_SYNC_PCLK_DIV4;//ADC_CLOCK_ASYNC_DIV1;
+    hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;//ADC_CLOCK_ASYNC_DIV1;
     hadc1.Init.Resolution = ADC_RESOLUTION_12B;
     hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
     hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
@@ -178,7 +180,7 @@ int main()
 {
     //HAL_Init();
     //SystemClock_Config();
-
+    start_sec = time(NULL);
     TIM1_Init();
     ADC1_Init();
     HAL_ADC_Start_IT(&hadc1);
