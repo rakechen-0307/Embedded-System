@@ -5,7 +5,8 @@ import struct
 from collections import deque
 import numpy as np
 import pandas as pd
-
+import matplotlib.pyplot as plt
+import numpy as np
 
 f = open("serial.in", "w")
 f.write('')
@@ -20,7 +21,7 @@ with open('data.csv', 'w') as csv_file:
     csv_writer.writeheader()
 
 start_time = time.time()
-ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1000)
+ser = serial.Serial('COM7', 115200, timeout=1000)
 
 
 def receive_msg():
@@ -149,3 +150,20 @@ def get_starter(starter: str) -> list[str]:
 
 receive_float()
 ser.close()
+
+
+csv_file = 'data.csv'
+plt.style.use('fivethirtyeight')
+data = pd.read_csv(csv_file)
+t_vals = data['timestamp']
+x_vals = data['x']
+x_filtered_vals = data['x_filtered']
+
+plt.cla()
+
+plt.plot(t_vals, x_vals, label='x')
+plt.plot(t_vals, x_filtered_vals, label='x_filtered')
+
+plt.legend(loc='upper left')
+plt.tight_layout()
+plt.show()
