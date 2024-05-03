@@ -221,6 +221,7 @@ int main(void)
     {
       BSP_ACCELERO_AccGetXYZ(pDataXYZ);
       inputF32[i] = (float)pDataXYZ[0];
+      // inputF32[i] = (float)sin(2*PI*0.008*i); //for verification
     }
     /* ----------------------------------------------------------------------
     ** Call the FIR process function for every blockSize samples

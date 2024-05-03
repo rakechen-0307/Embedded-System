@@ -21,7 +21,7 @@ with open('data.csv', 'w') as csv_file:
     csv_writer.writeheader()
 
 start_time = time.time()
-ser = serial.Serial('COM7', 115200, timeout=1000)
+ser = serial.Serial('COM6', 115200, timeout=1000)
 
 
 def receive_msg():
