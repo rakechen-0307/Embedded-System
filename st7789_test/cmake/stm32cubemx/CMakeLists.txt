@@ -14,8 +14,12 @@ target_compile_definitions(stm32cubemx INTERFACE
 
 target_include_directories(stm32cubemx INTERFACE
     ../../Core/Inc
+    ../../USB_DEVICE/App
+    ../../USB_DEVICE/Target
     ../../Drivers/STM32L4xx_HAL_Driver/Inc
     ../../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy
+    ../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc
+    ../../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Inc
     ../../Drivers/CMSIS/Device/ST/STM32L4xx/Include
     ../../Drivers/CMSIS/Include
 )
@@ -28,11 +32,17 @@ target_sources(stm32cubemx INTERFACE
     ../../Core/Src/i2c.c
     ../../Core/Src/quadspi.c
     ../../Core/Src/spi.c
+    ../../Core/Src/tim.c
     ../../Core/Src/usart.c
-    ../../Core/Src/usb_otg.c
     ../../Core/Src/stm32l4xx_it.c
     ../../Core/Src/stm32l4xx_hal_msp.c
-    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dfsdm.c
+    ../../USB_DEVICE/App/usb_device.c
+    ../../USB_DEVICE/App/usbd_desc.c
+    ../../USB_DEVICE/App/usbd_custom_hid_if.c
+    ../../USB_DEVICE/Target/usbd_conf.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pcd.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pcd_ex.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_ll_usb.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c
@@ -48,6 +58,7 @@ target_sources(stm32cubemx INTERFACE
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c
+    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dfsdm.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_qspi.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi_ex.c
@@ -55,10 +66,11 @@ target_sources(stm32cubemx INTERFACE
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c
     ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c
-    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pcd.c
-    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pcd_ex.c
-    ../../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_ll_usb.c
     ../../Core/Src/system_stm32l4xx.c
+    ../../Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c
+    ../../Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c
+    ../../Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c
+    ../../Middlewares/ST/STM32_USB_Device_Library/Class/CustomHID/Src/usbd_customhid.c
     ../../Core/Src/sysmem.c
     ../../Core/Src/syscalls.c
     ../../startup_stm32l475xx.s

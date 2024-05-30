@@ -100,10 +100,10 @@ void Error_Handler(void);
 #define ARD_A1_GPIO_Port GPIOC
 #define ARD_A0_Pin GPIO_PIN_5
 #define ARD_A0_GPIO_Port GPIOC
-#define ARD_D3_Pin GPIO_PIN_0
-#define ARD_D3_GPIO_Port GPIOB
-#define ARD_D6_Pin GPIO_PIN_1
-#define ARD_D6_GPIO_Port GPIOB
+#define pwmA_Pin GPIO_PIN_0
+#define pwmA_GPIO_Port GPIOB
+#define pwmB_Pin GPIO_PIN_1
+#define pwmB_GPIO_Port GPIOB
 #define ARD_D8_Pin GPIO_PIN_2
 #define ARD_D8_GPIO_Port GPIOB
 #define DFSDM1_DATIN2_Pin GPIO_PIN_7
@@ -206,8 +206,8 @@ void Error_Handler(void);
 #define STSAFE_A100_RESET_GPIO_Port GPIOD
 #define SYS_JTD0_SWO_Pin GPIO_PIN_3
 #define SYS_JTD0_SWO_GPIO_Port GPIOB
-#define ARD_D5_Pin GPIO_PIN_4
-#define ARD_D5_GPIO_Port GPIOB
+#define pwmC_Pin GPIO_PIN_4
+#define pwmC_GPIO_Port GPIOB
 #define SPSGRF_915_SPI3_CSN_Pin GPIO_PIN_5
 #define SPSGRF_915_SPI3_CSN_GPIO_Port GPIOB
 #define ST_LINK_UART1_TX_Pin GPIO_PIN_6

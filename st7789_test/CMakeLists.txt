@@ -34,6 +34,9 @@ enable_language(C ASM)
 project(${CMAKE_PROJECT_NAME})
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
+# Add the -u _printf_float flag to the linker flags
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -u _printf_float")
+
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME})
 
@@ -45,7 +48,7 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined library search paths
 )
 
-file(GLOB_RECURSE SOURCE_FILES "ST7789/*.c")
+file(GLOB_RECURSE SOURCE_FILES "ST7789/*.c" "USB_media/*.c" "FOC/*.c")
 
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
@@ -58,6 +61,8 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     "ST7789"
+    "USB_media"
+    "FOC"
 )
 
 # Add project symbols (macros)

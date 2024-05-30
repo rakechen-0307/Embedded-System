@@ -23,12 +23,19 @@
 #include "i2c.h"
 #include "quadspi.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
-#include "usb_otg.h"
+#include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
+#include <math.h>
+#include "AS5600.h"
+#include "foc.h"
+#include "usbd_customhid.h"
+#include "keyboard.h"
 #include "st7789.h"
 /* USER CODE END Includes */
 
@@ -50,7 +57,15 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+char msg[100];
 
+float Kp = 8;
+float Ki = 0;
+float Kd = 0;
+float Sensor_Angle;
+static float target_angle = 0;
+
+extern USBD_HandleTypeDef hUsbDeviceFS;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -65,14 +80,15 @@ void SystemClock_Config(void);
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
+ * @brief  The application entry point.
+ * @retval int
+ */
 int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+  float angle;
+  char msg[100];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -101,16 +117,59 @@ int main(void)
   MX_SPI3_Init();
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
-  MX_USB_OTG_FS_PCD_Init();
+  MX_I2C1_Init();
+  MX_TIM3_Init();
+  MX_TIM6_Init();
+  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
   ST7789_Init();
+  // ST7789_Test();
+
+  bsp_as5600Init();
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
+  AlignSensor();
+  HAL_TIM_Base_Start_IT(&htim6);
+
+  int Partition_Rev = 10;
+  int Partition_Inx = 0;
+  float angleArray[Partition_Rev];
+  for (int i = 0; i < Partition_Rev; i++)
+  {
+    angleArray[i] = i * 2 * _PI / Partition_Rev;
+  }
+  float ThresholdArray[Partition_Rev - 1];
+  for (int i = 0; i < Partition_Rev - 1; i++)
+  {
+    ThresholdArray[i] = (angleArray[i] + angleArray[i + 1]) / 2;
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    ST7789_Test();
+    angle = bsp_as5600GetWrappedAngle();
+    sprintf(msg, "angle: %f\n", angle);
+    HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
+
+    if (angle > ThresholdArray[Partition_Inx] && Partition_Inx < Partition_Rev - 1)
+    {
+      Partition_Inx++;
+      VOL_UP_FLAG = 1;
+      target_angle = angleArray[Partition_Inx];
+    }
+    else if (angle < ThresholdArray[Partition_Inx - 1] && Partition_Inx > 0)
+    {
+      Partition_Inx--;
+      VOL_UP_FLAG = -1;
+      target_angle = angleArray[Partition_Inx];
+    }
+
+    volume_control(VOL_UP_FLAG);
+    VOL_UP_FLAG = 0;
+    ClosedLoopPosition(Kp, Ki, Kd, target_angle);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -119,30 +178,30 @@ int main(void)
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+ * @brief System Clock Configuration
+ * @retval None
+ */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-  */
+   */
   if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
   {
     Error_Handler();
   }
 
   /** Configure LSE Drive Capability
-  */
+   */
   HAL_PWR_EnableBkUpAccess();
   __HAL_RCC_LSEDRIVE_CONFIG(RCC_LSEDRIVE_LOW);
 
   /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSE|RCC_OSCILLATORTYPE_MSI;
+   * in the RCC_OscInitTypeDef structure.
+   */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSE | RCC_OSCILLATORTYPE_MSI;
   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.MSIState = RCC_MSI_ON;
   RCC_OscInitStruct.MSICalibrationValue = 0;
@@ -160,9 +219,8 @@ void SystemClock_Config(void)
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
@@ -174,18 +232,37 @@ void SystemClock_Config(void)
   }
 
   /** Enable MSI Auto calibration
-  */
+   */
   HAL_RCCEx_EnableMSIPLLMode();
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  // Check which version of the timer triggered this callback and toggle LED
+  if (htim == &htim6)
+  {
+    // ClosedLoopPosition(Kp, Ki, Kd, target_angle);
+    __NOP();
+  }
+}
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if (GPIO_Pin == GPIO_PIN_13)
+  {
+    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+  }
+  else
+  {
+    __NOP();
+  }
+}
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -197,14 +274,14 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
