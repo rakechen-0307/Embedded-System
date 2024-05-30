@@ -50,6 +50,8 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Drivers/CMSIS/DSP/Lib/ARM
 )
 
+file(GLOB_RECURSE SOURCE_FILES "Drivers/LCD/*.c" "Drivers/UGUI/*.c" "Drivers/UGUI/Fonts/*.c")
+
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
@@ -68,6 +70,8 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/foc.c
 
     Core/Src/keyboard.c
+
+    ${SOURCE_FILES}
 )
 
 # Add include paths
@@ -78,6 +82,9 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     "BSP/Drivers/BSP/B-L475E-IOT01"
     "BSP/Drivers/BSP/Components/Common"
     "BSP/Drivers/BSP/Components/lsm6dsl"
+
+    "Drivers/LCD"
+    "Drivers/UGUI"
 )
 
 # Add project symbols (macros)

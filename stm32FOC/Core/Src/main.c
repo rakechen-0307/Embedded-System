@@ -39,6 +39,8 @@
 #include "foc.h"
 #include "usbd_customhid.h"
 #include "keyboard.h"
+#include "ugui.h"
+#include "lcd.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -123,6 +125,15 @@ float32_t snr;
  *                  USB
  * ------------------------------------------------------------------- */
 extern USBD_HandleTypeDef hUsbDeviceFS;
+/* ------------------------------------------------------------------
+ *                  FOC
+ * ------------------------------------------------------------------- */
+float Kp = 8;
+float Ki = 0;
+float Kd = 0;
+float Sensor_Angle;
+static float target_angle = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -130,6 +141,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 void int16_to_float(int16_t *a, float *b, int length);
 void DSP_Test(void);
+void LCD_test(void);
 
 /* USER CODE END PFP */
 
@@ -176,7 +188,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  MX_SPI1_Init();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -223,10 +235,18 @@ int main(void)
   {
     status = ARM_MATH_SUCCESS;
   }
+  // arm_fir_init_f32(&S, NUM_TAPS, (float32_t *)&myfirCoeffs32[0], &firStateF32[0], blockSize);
 #endif
   /* Call FIR init function to initialize the instance structure. */
+  // sprintf(msg, "LCD start init\n", angle);
+  // HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
+  // LCD_init();
+  // sprintf(msg, "LCD init ended\n", angle);
+  // HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
+  // LCD_test();
+  // sprintf(msg, "LCD tested\n", angle);
+  // HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
 
-  arm_fir_init_f32(&S, NUM_TAPS, (float32_t *)&myfirCoeffs32[0], &firStateF32[0], blockSize);
   bsp_as5600Init();
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
@@ -246,20 +266,6 @@ int main(void)
   {
     ThresholdArray[i] = (angleArray[i] + angleArray[i + 1]) / 2;
   }
-  for (int i = 0; i < Partition_Rev - 1; i++)
-  {
-    sprintf(msg, "ThresholdArray[%d]: %f\n", i, ThresholdArray[i]);
-    HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
-  }
-
-  /* ------------------------------------------------------------------
-   *                  FOC
-   * ------------------------------------------------------------------- */
-  float target_angle = 0;
-  float Kp = 4;
-  float Ki = 0;
-  float Kd = 4;
-  float Sensor_Angle;
 
   /* USER CODE END 2 */
   /* Infinite loop */
@@ -285,7 +291,7 @@ int main(void)
       target_angle = angleArray[Partition_Inx];
     }
 
-    volume_control(VOL_UP_FLAG);
+    // volume_control(VOL_UP_FLAG);
     VOL_UP_FLAG = 0;
     sprintf(msg, "target_angle: %f\n", target_angle);
     HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
@@ -362,7 +368,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   // Check which version of the timer triggered this callback and toggle LED
   if (htim == &htim6)
   {
-    // ClosedLoopPosition(Kp, target_angle);
+    // ClosedLoopPosition(Kp, Ki, Kd, target_angle);
     __NOP();
   }
 }
@@ -400,6 +406,26 @@ void DSP_Test()
     sin_out[i] = arm_sin_f32(i * 2 * 3.1416f / 128) + 0.3f * arm_sin_f32(i * 2 * 3.1416f / 16);
   }
   HAL_UART_Transmit(&huart1, (uint8_t *)sin_out, 256 * sizeof(float), HAL_MAX_DELAY);
+}
+void LCD_test()
+{
+  UG_FillScreen(C_BLACK);
+  UG_FillFrame(70, 150, 170, 210, C_BLACK);
+  LCD_PutStr(120 - 32, 150, "80", FONT_32X53, C_WHITE, C_BLACK);
+  UG_DrawDashboard(120, 150, 100, 90, 0, 80, C_YELLOW);
+  HAL_Delay(1000);
+  UG_FillFrame(70, 150, 170, 210, C_BLACK);
+  LCD_PutStr(120 - 32, 150, "60", FONT_32X53, C_WHITE, C_BLACK);
+  UG_DrawDashboard(120, 150, 100, 90, 80, 60, C_BLACK);
+  HAL_Delay(1000);
+  UG_FillFrame(70, 150, 170, 210, C_BLACK);
+  LCD_PutStr(120 - 48, 150, "100", FONT_32X53, C_WHITE, C_BLACK);
+  UG_DrawDashboard(120, 150, 100, 90, 60, 100, C_YELLOW);
+  HAL_Delay(1000);
+  UG_FillFrame(70, 150, 170, 210, C_BLACK);
+  LCD_PutStr(120 - 32, 150, "20", FONT_32X53, C_WHITE, C_BLACK);
+  UG_DrawDashboard(120, 150, 100, 90, 100, 20, C_BLACK);
+  HAL_Delay(1000);
 }
 /* USER CODE END 4 */
 
