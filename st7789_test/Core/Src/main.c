@@ -58,6 +58,7 @@
 
 /* USER CODE BEGIN PV */
 char msg[100];
+float angle;
 
 float Kp = 8;
 float Ki = 0;
@@ -87,8 +88,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  float angle;
-  char msg[100];
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -123,7 +123,8 @@ int main(void)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
   ST7789_Init();
-  // ST7789_Test();
+  ST7789_Test();
+  ST7789_Fill_Color(WHITE);
 
   bsp_as5600Init();
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
@@ -151,8 +152,9 @@ int main(void)
   while (1)
   {
     angle = bsp_as5600GetWrappedAngle();
-    sprintf(msg, "angle: %f\n", angle);
-    HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
+    sprintf(msg, "angle: %.3f", angle);
+
+    // HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
 
     if (angle > ThresholdArray[Partition_Inx] && Partition_Inx < Partition_Rev - 1)
     {
@@ -243,6 +245,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim == &htim6)
   {
     // ClosedLoopPosition(Kp, Ki, Kd, target_angle);
+
     __NOP();
   }
 }

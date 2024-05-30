@@ -1,6 +1,7 @@
 #include "keyboard.h"
 #include "usbd_customhid.h"
 #include "main.h"
+#include "st7789.h"
 #include <string.h>
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
@@ -68,6 +69,8 @@ void volume_control(int flag)
         {
             hidbuffer2[0] = 0x01;
         }
+        ST7789_WriteString(10, 10, msg, Font_16x26, GBLUE, WHITE);
+        // DrawRec(angle);
     }
     else if (flag == -1)
     {
@@ -76,6 +79,8 @@ void volume_control(int flag)
         {
             hidbuffer2[0] = 0x02;
         }
+        ST7789_WriteString(10, 10, msg, Font_16x26, GBLUE, WHITE);
+        // DrawRec(angle);
     }
     USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, hidbuffer2, 1);
 }

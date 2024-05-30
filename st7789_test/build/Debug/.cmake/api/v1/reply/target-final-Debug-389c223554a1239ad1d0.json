@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "st7789_test.elf"
+			"path" : "final.elf"
 		}
 	],
 	"backtrace" : 1,
@@ -271,7 +271,7 @@
 			]
 		}
 	],
-	"id" : "st7789_test::@6890427a1f51a3e7e1df",
+	"id" : "final::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -287,8 +287,8 @@
 		],
 		"language" : "C"
 	},
-	"name" : "st7789_test",
-	"nameOnDisk" : "st7789_test.elf",
+	"name" : "final",
+	"nameOnDisk" : "final.elf",
 	"paths" : 
 	{
 		"build" : ".",

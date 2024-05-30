@@ -46,7 +46,7 @@
 					[
 						0
 					],
-					"name" : "st7789_test",
+					"name" : "final",
 					"targetIndexes" : 
 					[
 						0
@@ -65,9 +65,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "st7789_test::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-st7789_test-Debug-746f1ef62bf899897891.json",
-					"name" : "st7789_test",
+					"id" : "final::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-final-Debug-389c223554a1239ad1d0.json",
+					"name" : "final",
 					"projectIndex" : 0
 				}
 			]
