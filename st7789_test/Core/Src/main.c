@@ -123,7 +123,7 @@ int main(void)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
   ST7789_Init();
-  ST7789_Test();
+  // ST7789_Test();
   ST7789_Fill_Color(WHITE);
 
   bsp_as5600Init();

@@ -69,7 +69,7 @@ void volume_control(int flag)
         {
             hidbuffer2[0] = 0x01;
         }
-        ST7789_WriteString(10, 10, msg, Font_16x26, GBLUE, WHITE);
+        ST7789_WriteString(10, 10, msg, Font_16x26, BLACK, WHITE);
         // DrawRec(angle);
     }
     else if (flag == -1)
@@ -79,7 +79,7 @@ void volume_control(int flag)
         {
             hidbuffer2[0] = 0x02;
         }
-        ST7789_WriteString(10, 10, msg, Font_16x26, GBLUE, WHITE);
+        ST7789_WriteString(10, 10, msg, Font_16x26, BLACK, WHITE);
         // DrawRec(angle);
     }
     USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, hidbuffer2, 1);
