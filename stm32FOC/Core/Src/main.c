@@ -39,6 +39,10 @@
 #include "foc.h"
 #include "usbd_customhid.h"
 #include "keyboard.h"
+// #include "ugui.h"
+// #include "lcd.h"
+
+#include "st7789.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,10 +58,6 @@
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif /* __GNUC__ */
 
-#define TEST_LENGTH_SAMPLES 320
-#define SNR_THRESHOLD_F32 140.0f
-#define BLOCK_SIZE 32
-#define NUM_TAPS 29
 // #define FIR_EXAMPLE
 /* USER CODE END PD */
 
@@ -69,67 +69,27 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-float sin_out[256];
-float fft_mag[256];
-float fft_out[256];
 char msg[100];
 int16_t pDataXYZ[3] = {0};
-
-/* -------------------------------------------------------------------
- * The input signal and reference output (computed with MATLAB)
- * are defined externally in arm_fir_lpf_data.c.
- * ------------------------------------------------------------------- */
-
-extern float32_t testInput_f32_1kHz_15kHz[TEST_LENGTH_SAMPLES];
-extern float32_t refOutput[TEST_LENGTH_SAMPLES];
-
-/* -------------------------------------------------------------------
- * Declare Test output buffer
- * ------------------------------------------------------------------- */
-
-static float32_t testOutput[TEST_LENGTH_SAMPLES];
-static float32_t testInput[TEST_LENGTH_SAMPLES];
-
-/* -------------------------------------------------------------------
- * Declare State buffer of size (numTaps + blockSize - 1)
- * ------------------------------------------------------------------- */
-
-static float32_t firStateF32[BLOCK_SIZE + NUM_TAPS - 1];
-
-/* ----------------------------------------------------------------------
-** FIR Coefficients buffer generated using fir1() MATLAB function.
-** fir1(28, 6/24)
-** ------------------------------------------------------------------- */
-
-const float32_t firCoeffs32[NUM_TAPS] = {
-    -0.0018225230f, -0.0015879294f, +0.0000000000f, +0.0036977508f, +0.0080754303f, +0.0085302217f, -0.0000000000f, -0.0173976984f,
-    -0.0341458607f, -0.0333591565f, +0.0000000000f, +0.0676308395f, +0.1522061835f, +0.2229246956f, +0.2504960933f, +0.2229246956f,
-    +0.1522061835f, +0.0676308395f, +0.0000000000f, -0.0333591565f, -0.0341458607f, -0.0173976984f, -0.0000000000f, +0.0085302217f,
-    +0.0080754303f, +0.0036977508f, +0.0000000000f, -0.0015879294f, -0.0018225230f};
-
-const float32_t myfirCoeffs32[NUM_TAPS] = {
-    0.002473435810475501f, 0.003343127445659259f, 0.005336578223975353f, 0.008720202929326822f, 0.013628967885133642f, 0.02003713296555303f, 0.027746331317450117f, 0.036393180280610914f, 0.04547630443435468f, 0.054400296473695105f, 0.06253203866712877f, 0.06926322441214175f, 0.0740720610951766f, 0.07657711805931847f, 0.07657711805931847f, 0.0740720610951766f, 0.06926322441214175f, 0.06253203866712877f, 0.054400296473695126f, 0.045476304434354686f, 0.03639318028061092f, 0.02774633131745012f, 0.020037132965553033f, 0.013628967885133642f, 0.008720202929326822f, 0.005336578223975353f, 0.003343127445659259f, 0.002473435810475501f};
-
-/* ------------------------------------------------------------------
- * Global variables for FIR LPF Example
- * ------------------------------------------------------------------- */
-
-uint32_t blockSize = BLOCK_SIZE;
-uint32_t numBlocks = TEST_LENGTH_SAMPLES / BLOCK_SIZE;
-
-float32_t snr;
 
 /* ------------------------------------------------------------------
  *                  USB
  * ------------------------------------------------------------------- */
 extern USBD_HandleTypeDef hUsbDeviceFS;
+/* ------------------------------------------------------------------
+ *                  FOC
+ * ------------------------------------------------------------------- */
+float Kp = 8;
+float Ki = 0;
+float Kd = 0;
+float Sensor_Angle;
+static float target_angle = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-void int16_to_float(int16_t *a, float *b, int length);
-void DSP_Test(void);
 
 /* USER CODE END PFP */
 
@@ -146,21 +106,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  uint16_t raw_angle;
   float angle;
   char msg[100];
-  uint32_t i;
-  arm_fir_instance_f32 S;
-  arm_status status;
-  float32_t *inputF32, *outputF32;
 
-/* Initialize input and output buffer pointers */
-#ifdef FIR_EXAMPLE
-  inputF32 = &testInput_f32_1kHz_15kHz[0];
-  outputF32 = &testOutput[0];
-#endif
-  inputF32 = &testInput[0];
-  outputF32 = &testOutput[0];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -176,7 +124,6 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -185,6 +132,7 @@ int main(void)
   MX_DFSDM1_Init();
   MX_I2C2_Init();
   MX_QUADSPI_Init();
+  MX_SPI1_Init();
   MX_SPI3_Init();
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
@@ -193,40 +141,10 @@ int main(void)
   MX_TIM6_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-#ifdef FIR_EXAMPLE
-  HAL_UART_Transmit(&huart1, (uint8_t *)inputF32, 320 * sizeof(float), HAL_MAX_DELAY);
-  /* Call FIR init function to initialize the instance structure. */
 
-  arm_fir_init_f32(&S, NUM_TAPS, (float32_t *)&firCoeffs32[0], &firStateF32[0], blockSize);
+  // ST7789_Init();
+  // ST7789_Test();
 
-  /* ----------------------------------------------------------------------
-  ** Call the FIR process function for every blockSize samples
-  ** ------------------------------------------------------------------- */
-  for (i = 0; i < numBlocks; i++)
-  {
-    arm_fir_f32(&S, inputF32 + (i * blockSize), outputF32 + (i * blockSize), blockSize);
-  }
-  HAL_UART_Transmit(&huart1, (uint8_t *)outputF32, 320 * sizeof(float), HAL_MAX_DELAY);
-
-  /* ----------------------------------------------------------------------
-  ** Compare the generated output against the reference output computed
-  ** in MATLAB.
-  ** ------------------------------------------------------------------- */
-
-  snr = arm_snr_f32(&refOutput[0], &testOutput[0], TEST_LENGTH_SAMPLES);
-
-  if (snr < SNR_THRESHOLD_F32)
-  {
-    status = ARM_MATH_TEST_FAILURE;
-  }
-  else
-  {
-    status = ARM_MATH_SUCCESS;
-  }
-#endif
-  /* Call FIR init function to initialize the instance structure. */
-
-  arm_fir_init_f32(&S, NUM_TAPS, (float32_t *)&myfirCoeffs32[0], &firStateF32[0], blockSize);
   bsp_as5600Init();
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
@@ -246,20 +164,6 @@ int main(void)
   {
     ThresholdArray[i] = (angleArray[i] + angleArray[i + 1]) / 2;
   }
-  for (int i = 0; i < Partition_Rev - 1; i++)
-  {
-    sprintf(msg, "ThresholdArray[%d]: %f\n", i, ThresholdArray[i]);
-    HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
-  }
-
-  /* ------------------------------------------------------------------
-   *                  FOC
-   * ------------------------------------------------------------------- */
-  float target_angle = 0;
-  float Kp = 4;
-  float Ki = 0;
-  float Kd = 4;
-  float Sensor_Angle;
 
   /* USER CODE END 2 */
   /* Infinite loop */
@@ -272,20 +176,18 @@ int main(void)
 
     if (angle > ThresholdArray[Partition_Inx] && Partition_Inx < Partition_Rev - 1)
     {
-      HAL_UART_Transmit(&huart1, "UP\n", 3, HAL_MAX_DELAY);
       Partition_Inx++;
       VOL_UP_FLAG = 1;
       target_angle = angleArray[Partition_Inx];
     }
     else if (angle < ThresholdArray[Partition_Inx - 1] && Partition_Inx > 0)
     {
-      HAL_UART_Transmit(&huart1, "DOWN\n", 5, HAL_MAX_DELAY);
       Partition_Inx--;
       VOL_UP_FLAG = -1;
       target_angle = angleArray[Partition_Inx];
     }
 
-    volume_control(VOL_UP_FLAG);
+    // volume_control(VOL_UP_FLAG);
     VOL_UP_FLAG = 0;
     sprintf(msg, "target_angle: %f\n", target_angle);
     HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
@@ -362,7 +264,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   // Check which version of the timer triggered this callback and toggle LED
   if (htim == &htim6)
   {
-    // ClosedLoopPosition(Kp, target_angle);
+    // ClosedLoopPosition(Kp, Ki, Kd, target_angle);
     __NOP();
   }
 }
@@ -378,28 +280,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
 }
 
-void int16_to_float(int16_t *a, float *b, int length)
-{
-  for (int i = 0; i < length; i++)
-  {
-    b[i] = (float)a[i];
-  }
-}
 PUTCHAR_PROTOTYPE
 {
   HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
   return ch;
-}
-
-void DSP_Test()
-{
-  arm_rfft_fast_instance_f32 S;
-
-  for (uint16_t i = 0; i < 256; i++)
-  {
-    sin_out[i] = arm_sin_f32(i * 2 * 3.1416f / 128) + 0.3f * arm_sin_f32(i * 2 * 3.1416f / 16);
-  }
-  HAL_UART_Transmit(&huart1, (uint8_t *)sin_out, 256 * sizeof(float), HAL_MAX_DELAY);
 }
 /* USER CODE END 4 */
 
