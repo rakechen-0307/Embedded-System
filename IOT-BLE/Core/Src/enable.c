@@ -20,7 +20,21 @@ uint8_t deviceName[]={'S','T','M','3','2'};
 
 uint8_t buffer[255];
 
+// Encoder Service
+uint8_t UUID_ANGLE_SERVICE[] = {0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x05,0x50,0x05,0x00};
+uint8_t ANGLE_SERVICE_HANDLE[2];
 
+// Characteristic
+uint8_t UUID_CHAR_ANGLE_NAME[]={0x00,0x00,0x00,0x00,0x00,0x00,0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x50,0x05,0x00};
+uint8_t NAME_ANGLE_HANDLE[2];
+uint8_t NAME_ANGLE_VALUE[]={'{','\"','N','a','m','e','\"',':','\"','A','n','g','l','e','\"','}'};
+
+uint8_t UUID_CHAR_ENCODER[] = {0x01,0x00,0x00,0x00,0x00,0x00,0x03,0x00,0x00,0x00,0x00,0x00,0x00,0x50,0x05,0x00};
+uint8_t ENCODER_CHAR_HANDLE[2];
+uint8_t ENCODER_VALUE[]={'{','\"','A','n','g','l','e','\"',':','\"','+','0','0','0','0','\"','}'};
+
+
+// Hope to remove:
 
 uint8_t UUID_SERVICE_1[]={0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x50,0x05,0x00};//Reversed UUID of the service
 uint8_t CUSTOM_SERVICE_HANDLE[2];
@@ -218,6 +232,17 @@ void ble_init(){
 	setConnectable();
 
 
+	// Add Service
+	addService(UUID_ANGLE_SERVICE, ANGLE_SERVICE_HANDLE, SET_ATTRIBUTES(1+2+3*1));
+	// Add Characteristic
+	// Name
+	addCharacteristic(UUID_CHAR_ANGLE_NAME, NAME_ANGLE_HANDLE, ANGLE_SERVICE_HANDLE, SET_CONTENT_LENGTH(16+3), READABLE);
+	updateCharValue(ANGLE_SERVICE_HANDLE, NAME_ANGLE_HANDLE, 0, SET_CONTENT_LENGTH(16+3), NAME_ANGLE_VALUE);
+	// Value
+	addCharacteristic(UUID_CHAR_ENCODER, ENCODER_CHAR_HANDLE, ANGLE_SERVICE_HANDLE, SET_CONTENT_LENGTH(17), READABLE|NOTIFIBLE);
+	updateCharValue(ANGLE_SERVICE_HANDLE, ENCODER_CHAR_HANDLE, 0, SET_CONTENT_LENGTH(17), ENCODER_VALUE);
+
+	// hope to remove
 	//let's add the first service
 	addService(UUID_SERVICE_1,CUSTOM_SERVICE_HANDLE,SET_ATTRIBUTES(1+2+3*2+3+3));//1 atribute service +2 attribute char readable+3*(2 NOTIFYABLE READABLE charachteristics)
 

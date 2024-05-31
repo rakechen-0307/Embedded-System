@@ -37,6 +37,14 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+extern uint8_t ANGLE_SERVICE_HANDLE[2];
+extern uint8_t NAME_ANGLE_HANDLE[2];
+extern uint8_t NAME_ANGLE_VALUE[];
+extern uint8_t ENCODER_CHAR_HANDLE[2];
+extern uint8_t ENCODER_VALUE[];
+
+// hope to remove
+
 extern uint8_t TOF_CHAR_HANDLE[2];
 extern uint8_t CUSTOM_SERVICE_HANDLE[2];
 extern uint8_t TOF_VALUE[];
@@ -154,6 +162,7 @@ int main(void)
   float temp;
   int16_t accx,accy,accz;
   int16_t magx,magy,magz;
+  int16_t encoder_value = 0;
   initHTS221();
   init_accelerometer();
   init_magnetometer();
@@ -173,6 +182,16 @@ int main(void)
 		  if(update){
 			  update=0;
 
+			  // update encoder value
+			  updateSignedMillesimal(ANGLE_SERVICE_HANDLE, ENCODER_CHAR_HANDLE, ENCODER_VALUE, 10, encoder_value);
+			  encoder_value++;
+			  if (encoder_value == 100)
+			  {
+				  encoder_value = 0;
+			  }
+
+			  // hope to remove
+			  HAL_Delay(10);
 			  getDistance(&distanceComplete);
 			  updateSignedMillesimal(CUSTOM_SERVICE_HANDLE,TOF_CHAR_HANDLE,TOF_VALUE,13,distanceComplete);
 			  HAL_Delay(10);
