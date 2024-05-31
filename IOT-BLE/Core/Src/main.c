@@ -42,35 +42,6 @@ extern uint8_t NAME_ANGLE_HANDLE[2];
 extern uint8_t NAME_ANGLE_VALUE[];
 extern uint8_t ENCODER_CHAR_HANDLE[2];
 extern uint8_t ENCODER_VALUE[];
-
-// hope to remove
-
-extern uint8_t TOF_CHAR_HANDLE[2];
-extern uint8_t CUSTOM_SERVICE_HANDLE[2];
-extern uint8_t TOF_VALUE[];
-extern uint8_t TEMP_CHAR_HANDLE[];
-extern uint8_t HUM_CHAR_HANDLE[];
-extern uint8_t VALUE_TEMP[];
-extern uint8_t VALUE_HUM[];
-
-extern uint8_t PRESS_CHAR_HANDLE[2];
-extern uint8_t VALUE_PRESS[];
-
-
-extern uint8_t INERTIAL_SERVICE_HANDLE[2];
-extern uint8_t ACCX_CHAR_HANDLE[2];
-extern uint8_t ACCY_CHAR_HANDLE[2];
-extern uint8_t ACCZ_CHAR_HANDLE[2];
-
-extern uint8_t MAGNETIC_SERVICE_HANDLE[2];
-
-extern uint8_t MAGX_CHAR_HANDLE[2];
-extern uint8_t MAGY_CHAR_HANDLE[2];
-extern uint8_t MAGZ_CHAR_HANDLE[2];
-
-extern uint8_t X_VALUE[];
-extern uint8_t Y_VALUE[];
-extern uint8_t Z_VALUE[];
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -157,11 +128,6 @@ int main(void)
   int distanceComplete=0;
 
   HAL_TIM_Base_Start_IT(&htim6);
-  float press;
-  float hum;
-  float temp;
-  int16_t accx,accy,accz;
-  int16_t magx,magy,magz;
   int16_t encoder_value = 0;
   initHTS221();
   init_accelerometer();
@@ -189,34 +155,6 @@ int main(void)
 			  {
 				  encoder_value = 0;
 			  }
-
-			  // hope to remove
-			  HAL_Delay(10);
-			  getDistance(&distanceComplete);
-			  updateSignedMillesimal(CUSTOM_SERVICE_HANDLE,TOF_CHAR_HANDLE,TOF_VALUE,13,distanceComplete);
-			  HAL_Delay(10);
-			  getTemperature(&temp);
-			  updateSignedFloat(CUSTOM_SERVICE_HANDLE,TEMP_CHAR_HANDLE,VALUE_TEMP,9,temp);
-			  HAL_Delay(10);
-
-			  getHumidity(&hum);
-			  updateSignedFloat(CUSTOM_SERVICE_HANDLE,HUM_CHAR_HANDLE,VALUE_HUM,8,hum);
-
-			  HAL_Delay(10);
-			  getAxisAccelerometer(&accx,&accy,&accz);
-			  updateSignedMillesimal(INERTIAL_SERVICE_HANDLE,ACCX_CHAR_HANDLE,X_VALUE,10,accx);
-			  updateSignedMillesimal(INERTIAL_SERVICE_HANDLE,ACCY_CHAR_HANDLE,Y_VALUE,10,accy);
-			  updateSignedMillesimal(INERTIAL_SERVICE_HANDLE,ACCZ_CHAR_HANDLE,Z_VALUE,10,accz);
-
-			  getPressure(&press);
-			  updateSignedFloat(CUSTOM_SERVICE_HANDLE,PRESS_CHAR_HANDLE,VALUE_PRESS,10,press);
-
-              HAL_Delay(10);
-			  getAxisMagnetometer(&magx,&magy,&magz);
-			  updateSignedMillesimal(MAGNETIC_SERVICE_HANDLE,MAGX_CHAR_HANDLE,X_VALUE,10,magx);
-			  updateSignedMillesimal(MAGNETIC_SERVICE_HANDLE,MAGY_CHAR_HANDLE,Y_VALUE,10,magy);
-			  updateSignedMillesimal(MAGNETIC_SERVICE_HANDLE,MAGZ_CHAR_HANDLE,Z_VALUE,10,magz);
-
 
 			  startToF();
 			  int pwm=0;
