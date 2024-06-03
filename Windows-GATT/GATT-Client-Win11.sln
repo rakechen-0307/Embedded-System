@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GATT-Client-Win11", "GATT-Client-Win11.csproj", "{6CC0CBDE-6A1B-4BEF-AB2D-10DB62ECE703}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CC0CBDE-6A1B-4BEF-AB2D-10DB62ECE703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CC0CBDE-6A1B-4BEF-AB2D-10DB62ECE703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CC0CBDE-6A1B-4BEF-AB2D-10DB62ECE703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CC0CBDE-6A1B-4BEF-AB2D-10DB62ECE703}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB45DABC-A212-487E-8D7D-57D4D34E0DDE}
+	EndGlobalSection
+EndGlobal

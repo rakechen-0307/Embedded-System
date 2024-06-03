@@ -1,0 +1,36 @@
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows\GATT-Client-Win11.exe
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows\GATT-Client-Win11.deps.json
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows\GATT-Client-Win11.runtimeconfig.json
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows\GATT-Client-Win11.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows\GATT-Client-Win11.pdb
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows\WinRT.Runtime.dll
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.csproj.AssemblyReference.cache
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.GeneratedMSBuildEditorConfig.editorconfig
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.AssemblyInfoInputs.cache
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.AssemblyInfo.cs
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.csproj.CoreCompileInputs.cache
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.sourcelink.json
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Cli.638C4EF6.Up2Date
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.dll
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\refint\GATT-Client-Win11.dll
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.pdb
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.genruntimeconfig.cache
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows\ref\GATT-Client-Win11.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows\GATT-Client-Win11.exe
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows\GATT-Client-Win11.deps.json
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows\GATT-Client-Win11.runtimeconfig.json
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows\GATT-Client-Win11.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows\GATT-Client-Win11.pdb
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows\WinRT.Runtime.dll
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.csproj.AssemblyReference.cache
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.GeneratedMSBuildEditorConfig.editorconfig
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.AssemblyInfoInputs.cache
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.AssemblyInfo.cs
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.csproj.CoreCompileInputs.cache
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.sourcelink.json
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Cli.638C4EF6.Up2Date
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.dll
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\refint\GATT-Client-Win11.dll
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.pdb
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\GATT-Client-Win11.genruntimeconfig.cache
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows\ref\GATT-Client-Win11.dll
