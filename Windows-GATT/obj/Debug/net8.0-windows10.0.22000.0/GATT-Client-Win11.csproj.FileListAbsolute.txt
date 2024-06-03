@@ -1,0 +1,56 @@
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.exe
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.deps.json
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.runtimeconfig.json
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.pdb
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\WinRT.Runtime.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\Microsoft.Windows.SDK.NET.dll
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.csproj.AssemblyReference.cache
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.GeneratedMSBuildEditorConfig.editorconfig
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.AssemblyInfoInputs.cache
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.AssemblyInfo.cs
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.csproj.CoreCompileInputs.cache
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.sourcelink.json
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Cli.638C4EF6.Up2Date
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.dll
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\refint\GATT-Client-Win11.dll
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.pdb
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.genruntimeconfig.cache
+D:\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\ref\GATT-Client-Win11.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.exe
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.deps.json
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.runtimeconfig.json
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.pdb
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\WinRT.Runtime.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\Microsoft.Windows.SDK.NET.dll
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.csproj.AssemblyReference.cache
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.GeneratedMSBuildEditorConfig.editorconfig
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.AssemblyInfoInputs.cache
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.AssemblyInfo.cs
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.csproj.CoreCompileInputs.cache
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.sourcelink.json
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Cli.638C4EF6.Up2Date
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.dll
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\refint\GATT-Client-Win11.dll
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.pdb
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.genruntimeconfig.cache
+C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\ref\GATT-Client-Win11.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\AudioSwitcher.AudioApi.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\AudioSwitcher.AudioApi.CoreAudio.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\System.Configuration.ConfigurationManager.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\System.Diagnostics.EventLog.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\System.Diagnostics.PerformanceCounter.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\System.Security.Cryptography.ProtectedData.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+C:\C# Projects\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\AudioSwitcher.AudioApi.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\AudioSwitcher.AudioApi.CoreAudio.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\System.Configuration.ConfigurationManager.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\System.Diagnostics.EventLog.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\System.Diagnostics.PerformanceCounter.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\System.Security.Cryptography.ProtectedData.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+D:\GATT-Client-Win11\bin\Debug\net8.0-windows10.0.22000.0\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll

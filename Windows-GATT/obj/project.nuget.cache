@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "wGIICmRf8IZzRmQXfbztPu4fNd34Al1Ob/B7j/ovM1I8sgMMUSI+p4vF+i7m3a8F4BqQdGxsc5IntX6Pw3Vn5A==",
+  "success": true,
+  "projectFilePath": "C:\\C# Projects\\GATT-Client-Win11\\GATT-Client-Win11.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\andy0\\.nuget\\packages\\audioswitcher.audioapi\\3.0.0\\audioswitcher.audioapi.3.0.0.nupkg.sha512",
+    "C:\\Users\\andy0\\.nuget\\packages\\audioswitcher.audioapi.coreaudio\\3.0.3\\audioswitcher.audioapi.coreaudio.3.0.3.nupkg.sha512",
+    "C:\\Users\\andy0\\.nuget\\packages\\microsoft.windows.cswinrt\\2.0.7\\microsoft.windows.cswinrt.2.0.7.nupkg.sha512",
+    "C:\\Users\\andy0\\.nuget\\packages\\system.configuration.configurationmanager\\8.0.0\\system.configuration.configurationmanager.8.0.0.nupkg.sha512",
+    "C:\\Users\\andy0\\.nuget\\packages\\system.diagnostics.eventlog\\8.0.0\\system.diagnostics.eventlog.8.0.0.nupkg.sha512",
+    "C:\\Users\\andy0\\.nuget\\packages\\system.diagnostics.performancecounter\\8.0.0\\system.diagnostics.performancecounter.8.0.0.nupkg.sha512",
+    "C:\\Users\\andy0\\.nuget\\packages\\system.security.cryptography.protecteddata\\8.0.0\\system.security.cryptography.protecteddata.8.0.0.nupkg.sha512",
+    "C:\\Users\\andy0\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.22000.31\\microsoft.windows.sdk.net.ref.10.0.22000.31.nupkg.sha512"
+  ],
+  "logs": []
+}
