@@ -37,6 +37,7 @@
 #include "usbd_customhid.h"
 #include "keyboard.h"
 #include "st7789.h"
+#include "enable.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,22 +58,36 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+extern uint8_t ANGLE_SERVICE_HANDLE[2];
+extern uint8_t NAME_ANGLE_HANDLE[2];
+extern uint8_t NAME_ANGLE_VALUE[];
+extern uint8_t ENCODER_CHAR_HANDLE[2];
+extern uint8_t ENCODER_VALUE[];
+
 char msg[100];
 float angle;
 
 float Kp = 8;
 float Ki = 0;
 float Kd = 0;
+float target_angle = 0;
 float Sensor_Angle;
-static float target_angle = 0;
+
+const int Partition_Rev = 8;
+const int Angle_Range = 2 * _PI;
+int16_t Partition_Inx = 0;
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
+
+// for BLE
+int dataAvailable = 0;
+int update = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+void BLE_Task(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -122,9 +137,16 @@ int main(void)
   MX_TIM6_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
+  // RESET BLE MODULE
+  HAL_GPIO_WritePin(BLE_RESET_GPIO_Port, BLE_RESET_Pin, GPIO_PIN_RESET);
+  HAL_Delay(10);
+  HAL_GPIO_WritePin(BLE_RESET_GPIO_Port, BLE_RESET_Pin, GPIO_PIN_SET);
+
+  ble_init();
+  /*st7789*/
   ST7789_Init();
   // ST7789_Test();
-  ST7789_Fill_Color(WHITE);
+  ST7789_Fill_Color(BLACK);
 
   bsp_as5600Init();
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
@@ -133,18 +155,20 @@ int main(void)
   AlignSensor();
   HAL_TIM_Base_Start_IT(&htim6);
 
-  int Partition_Rev = 10;
-  int Partition_Inx = 0;
   float angleArray[Partition_Rev];
   for (int i = 0; i < Partition_Rev; i++)
   {
-    angleArray[i] = i * 2 * _PI / Partition_Rev;
+    angleArray[i] = Angle_Range * i / (Partition_Rev - 1);
   }
+
   float ThresholdArray[Partition_Rev - 1];
   for (int i = 0; i < Partition_Rev - 1; i++)
   {
     ThresholdArray[i] = (angleArray[i] + angleArray[i + 1]) / 2;
   }
+  sprintf(msg, "Vol: %2d", Partition_Inx);
+  ST7789_WriteString(10, 100, msg, Font_16x26, WHITE, BLACK);
+  target_angle = angleArray[Partition_Inx];
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -152,26 +176,30 @@ int main(void)
   while (1)
   {
     angle = bsp_as5600GetWrappedAngle();
-    sprintf(msg, "angle: %.3f", angle);
-
-    // HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
-
+    ClosedLoopPosition(Kp, Ki, Kd, target_angle);
     if (angle > ThresholdArray[Partition_Inx] && Partition_Inx < Partition_Rev - 1)
     {
+
       Partition_Inx++;
-      VOL_UP_FLAG = 1;
+      VOL_FLAG = 1;
       target_angle = angleArray[Partition_Inx];
     }
     else if (angle < ThresholdArray[Partition_Inx - 1] && Partition_Inx > 0)
     {
+
       Partition_Inx--;
-      VOL_UP_FLAG = -1;
+      VOL_FLAG = -1;
       target_angle = angleArray[Partition_Inx];
     }
+    if (VOL_FLAG != 0)
+    {
+      sprintf(msg, "Vol: %2d", Partition_Inx);
+      ST7789_WriteString(10, 100, msg, Font_16x26, WHITE, BLACK);
+    }
+    volume_control(VOL_FLAG);
+    BLE_Task();
+    VOL_FLAG = 0;
 
-    volume_control(VOL_UP_FLAG);
-    VOL_UP_FLAG = 0;
-    ClosedLoopPosition(Kp, Ki, Kd, target_angle);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -239,6 +267,14 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void BLE_Task(void)
+{
+  if (HAL_GPIO_ReadPin(BLE_INT_GPIO_Port, BLE_INT_Pin))
+  { // if an event occurs let's catch it
+    catchBLE();
+  }
+  updateSignedMillesimal(ANGLE_SERVICE_HANDLE, ENCODER_CHAR_HANDLE, ENCODER_VALUE, 10, Partition_Inx * 10);
+}
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   // Check which version of the timer triggered this callback and toggle LED

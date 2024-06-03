@@ -6,7 +6,7 @@ void toggle_mute(void);
 #define reportID1 1
 #define reportID2 2
 
-extern int VOL_UP_FLAG;
+extern int VOL_FLAG;
 
 typedef enum
 {

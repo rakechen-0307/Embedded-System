@@ -44,6 +44,10 @@ extern "C"
   /* USER CODE BEGIN EC */
   extern char msg[100];
   extern float angle;
+  extern float Kp;
+  extern float Ki;
+  extern float Kd;
+  extern float target_angle;
   /* USER CODE END EC */
 
   /* Exported macro ------------------------------------------------------------*/
@@ -226,7 +230,12 @@ extern "C"
 #define ISM43362_DRDY_EXTI1_GPIO_Port GPIOE
 
   /* USER CODE BEGIN Private defines */
-
+#define BLE_INT_GPIO_Port GPIOE
+#define BLE_INT_Pin GPIO_PIN_6
+#define BLE_CS_GPIO_Port GPIOD
+#define BLE_CS_Pin GPIO_PIN_13
+#define BLE_RESET_GPIO_Port GPIOA
+#define BLE_RESET_Pin GPIO_PIN_8
   /* USER CODE END Private defines */
 
 #ifdef __cplusplus

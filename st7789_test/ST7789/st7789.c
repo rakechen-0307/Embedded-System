@@ -46,8 +46,7 @@ static void ST7789_WriteData(uint8_t *buff, size_t buff_size)
 		{
 			HAL_SPI_Transmit_DMA(&ST7789_SPI_PORT, buff, chunk_size);
 			while (ST7789_SPI_PORT.hdmatx->State != HAL_DMA_STATE_READY)
-			{
-			}
+				;
 		}
 		else
 			HAL_SPI_Transmit(&ST7789_SPI_PORT, buff, chunk_size, HAL_MAX_DELAY);

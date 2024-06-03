@@ -47,11 +47,14 @@ void setPhaseVoltage(float Uq, float Ud, float phase_angle)
 void AlignSensor()
 {
     setPhaseVoltage(3, 0, _3PI_2);
-    HAL_Delay(2000);
+    HAL_Delay(500);
     zero_electric_angle = _electricalAngle();
     sprintf(msgFOC, "Zero %f\n", zero_electric_angle);
     HAL_UART_Transmit(&huart1, (uint8_t *)msgFOC, strlen(msgFOC), HAL_MAX_DELAY);
-    setPhaseVoltage(0, 0, _3PI_2);
+    for (int i = 0; i < 1000; i++)
+    {
+        ClosedLoopPosition(7, 0, 0, 0);
+    }
 }
 
 float Error = 0;
