@@ -1,7 +1,7 @@
 --target
-C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.dll
+C:\Embedded-System\Windows-GATT\obj\Debug\net8.0-windows10.0.22000.0\GATT-Client-Win11.dll
 --outdir
-C:\C# Projects\GATT-Client-Win11\obj\Debug\net8.0-windows10.0.22000.0\IIDOptimizer\
+C:\Embedded-System\Windows-GATT\obj\Debug\net8.0-windows10.0.22000.0\IIDOptimizer\
 --refs 
  C:\Users\andy0\.nuget\packages\audioswitcher.audioapi.coreaudio\3.0.3\lib\net452\AudioSwitcher.AudioApi.CoreAudio.dll
 --refs 

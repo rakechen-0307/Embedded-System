@@ -482,11 +482,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\C# Projects\\GATT-Client-Win11\\GATT-Client-Win11.csproj",
+      "projectUniqueName": "C:\\Embedded-System\\Windows-GATT\\GATT-Client-Win11.csproj",
       "projectName": "GATT-Client-Win11",
-      "projectPath": "C:\\C# Projects\\GATT-Client-Win11\\GATT-Client-Win11.csproj",
+      "projectPath": "C:\\Embedded-System\\Windows-GATT\\GATT-Client-Win11.csproj",
       "packagesPath": "C:\\Users\\andy0\\.nuget\\packages\\",
-      "outputPath": "C:\\C# Projects\\GATT-Client-Win11\\obj\\",
+      "outputPath": "C:\\Embedded-System\\Windows-GATT\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\andy0\\AppData\\Roaming\\NuGet\\NuGet.Config"

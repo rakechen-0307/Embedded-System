@@ -83,21 +83,6 @@ class GetBLEData
                 Console.WriteLine("Charateristic get");
                 GattCharacteristicProperties properties = gattCharacteristic.CharacteristicProperties;
 
-                if (properties.HasFlag(GattCharacteristicProperties.Read))
-                {
-                    GattReadResult result = await characteristic.ReadValueAsync();
-                    if (result.Status == GattCommunicationStatus.Success)
-                    {
-                        var reader = DataReader.FromBuffer(result.Value);
-                        byte[] input = new byte[reader.UnconsumedBufferLength];
-                        reader.ReadBytes(input);
-                        string str = Encoding.ASCII.GetString(input);
-                        Console.WriteLine($"result: {str}");
-                        int angleValue = ExtractValue(str);
-                        Console.WriteLine($"Extracted value: {angleValue}");
-                    }
-                }
-
                 if (properties.HasFlag(GattCharacteristicProperties.Notify))
                 {
                     GattCommunicationStatus status = await characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(
