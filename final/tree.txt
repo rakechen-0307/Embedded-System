@@ -1,0 +1,21 @@
+.
+├── BLE
+├── cmake
+├── CMakeLists.txt
+├── CMakePresets.json
+├── Core
+├── Drivers
+├── Final_Report.pdf
+├── FOC
+├── image
+├── Middlewares
+├── README.md
+├── ST7789
+├── st7789_test.ioc
+├── startup_stm32l475xx.s
+├── STM32L475VGTx_FLASH.ld
+├── tree.txt
+├── USB_DEVICE
+└── USB_media
+
+11 directories, 8 files
